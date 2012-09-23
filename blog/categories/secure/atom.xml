@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: secure | Scrapbookdev]]></title>
+  <link href="http://blog.simonov.me/blog/categories/secure/atom.xml" rel="self"/>
+  <link href="http://blog.simonov.me/"/>
+  <updated>2012-09-24T00:42:49+03:00</updated>
+  <id>http://blog.simonov.me/</id>
+  <author>
+    <name><![CDATA[Alexander Simonov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Easy way to secure column in database with Rails 3]]></title>
+    <link href="http://blog.simonov.me/blog/2012/05/19/easy-way-to-secure-column-in-database-with-rails-3/"/>
+    <updated>2012-05-19T19:48:00+03:00</updated>
+    <id>http://blog.simonov.me/blog/2012/05/19/easy-way-to-secure-column-in-database-with-rails-3</id>
+    <content type="html"><![CDATA[<p>In my current project I need to store crypted data to the column in database.
+I found a few projects on <a href="https://www.ruby-toolbox.com/categories/encryption">Ruby Toolbox</a> for this.
+But main issues of this projects is:</p>
+
+<ul>
+<li>They are too big</li>
+<li>They are not maintained</li>
+<li>They are not customizable</li>
+</ul>
+
+
+<p>So I found better solution for me.</p>
+
+<!-- more -->
+
+
+<p>As you know ActiveRecord can serialize any column. ActiveRecord uses Marshal to serialize column by default. But we can change it to using any custom serialization class. Main requirements of this custom class is to have <code>load</code> and <code>dump</code> methods.</p>
+
+<p>I think my example will helps you to decrease time of you development.</p>
+
+<p>``` ruby Example of custom serialization class
+class Example &lt; ActiveRecord::Base  <br/>
+  class Encryptor</p>
+
+<pre><code>def initialize(default = '')
+  @default = default
+end
+
+def cipher
+  # You can use any two ways encryption ruby gem for this
+  # I'm used gibberish bacause it very usable for me
+  @cipher ||= ::Gibberish::AES.new('p@ssw0rd')
+end
+
+def load(s)
+  s.present? ? cipher.dec(s) : @default.clone
+end
+
+def dump(s)
+  cipher.enc(s || @default)
+end   
+</code></pre>
+
+<p>  end</p>
+
+<p>  serialize :key, Encryptor.new('')
+end
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

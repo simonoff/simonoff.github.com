@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+    <url>
+        <loc>http://blog.simonov.me/blog/2011/07/01/a_way_to_the_clouds/</loc>
+        <lastmod>2012-09-24T00:42:33+03:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://blog.simonov.me/blog/2012/05/19/easy-way-to-secure-column-in-database-with-rails-3/
+        </loc>
+        <lastmod>2012-09-24T00:42:33+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.simonov.me/blog/archives/</loc>
+        <lastmod>2012-09-24T00:42:33+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.simonov.me/</loc>
+        <lastmod>2012-09-24T00:42:33+03:00</lastmod>
+    </url>
+</urlset>

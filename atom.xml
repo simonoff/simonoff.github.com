@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Scrapbookdev]]></title>
+  <link href="http://blog.simonov.me/atom.xml" rel="self"/>
+  <link href="http://blog.simonov.me/"/>
+  <updated>2012-09-24T00:42:49+03:00</updated>
+  <id>http://blog.simonov.me/</id>
+  <author>
+    <name><![CDATA[Alexander Simonov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Easy way to secure column in database with Rails 3]]></title>
+    <link href="http://blog.simonov.me/blog/2012/05/19/easy-way-to-secure-column-in-database-with-rails-3/"/>
+    <updated>2012-05-19T19:48:00+03:00</updated>
+    <id>http://blog.simonov.me/blog/2012/05/19/easy-way-to-secure-column-in-database-with-rails-3</id>
+    <content type="html"><![CDATA[<p>In my current project I need to store crypted data to the column in database.
+I found a few projects on <a href="https://www.ruby-toolbox.com/categories/encryption">Ruby Toolbox</a> for this.
+But main issues of this projects is:</p>
+
+<ul>
+<li>They are too big</li>
+<li>They are not maintained</li>
+<li>They are not customizable</li>
+</ul>
+
+
+<p>So I found better solution for me.</p>
+
+<!-- more -->
+
+
+<p>As you know ActiveRecord can serialize any column. ActiveRecord uses Marshal to serialize column by default. But we can change it to using any custom serialization class. Main requirements of this custom class is to have <code>load</code> and <code>dump</code> methods.</p>
+
+<p>I think my example will helps you to decrease time of you development.</p>
+
+<figure class='code'><figcaption><span>Example of custom serialization class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Example</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Encryptor</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@default</span> <span class="o">=</span> <span class="n">default</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">cipher</span>
+</span><span class='line'>      <span class="c1"># You can use any two ways encryption ruby gem for this</span>
+</span><span class='line'>      <span class="c1"># I&#39;m used gibberish bacause it very usable for me</span>
+</span><span class='line'>      <span class="vi">@cipher</span> <span class="o">||=</span> <span class="o">::</span><span class="no">Gibberish</span><span class="o">::</span><span class="no">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;p@ssw0rd&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">s</span><span class="o">.</span><span class="n">present?</span> <span class="p">?</span> <span class="n">cipher</span><span class="o">.</span><span class="n">dec</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">:</span> <span class="vi">@default</span><span class="o">.</span><span class="n">clone</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">cipher</span><span class="o">.</span><span class="n">enc</span><span class="p">(</span><span class="n">s</span> <span class="o">||</span> <span class="vi">@default</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">serialize</span> <span class="ss">:key</span><span class="p">,</span> <span class="no">Encryptor</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Way To The Clouds]]></title>
+    <link href="http://blog.simonov.me/blog/2011/07/01/a_way_to_the_clouds/"/>
+    <updated>2011-07-01T01:24:27+03:00</updated>
+    <id>http://blog.simonov.me/blog/2011/07/01/a_way_to_the_clouds</id>
+    <content type="html"><![CDATA[<p><img src="http://blog.simonov.me/images/clouds.jpg" title="Clouds" alt="picture alt" /></p>
+
+<p>Every project after launch begin to think about millions users and billions requests. But every time developers has a restrictions on hardware power to accept this billions requests. Because each request to server must be doing something useful we need clean our web server from requests to static files like images, JavaScript, CSS, etc.</p>
+
+<!-- more -->
+
+
+<p>We have two ways to do it - use separate web server for static files or use Content Delivery Networks. Each way has an issues. Separate web server has additional fees for setup, administration, supporting. And in this way we need additional servers for replying on requests to static files as fast as we can. But this way give to us full control under our data storage and headers what we will send to the browser. CDN has additional fees only for traffic and data storage. And our static files will be sent to browser very fast. But we cannot control which headers will be sent to our clients. I will show you how to fix some issues with headers.
+So our project has chosen CDN. We use Amazon EC2 so we has chosen Amazon CloudFront.</p>
+
+<p>But we still have another issue with our static files. They are too big. I mean JS and CSS. So we need compress they. There is two way to do it.
+Compress by archivator or obfuscate code of JS and CSS.</p>
+
+<p>With obfuscate we will have big trouble - DEBUG! How we can debug the code from browser when we get error in first line on 3456 char with trace like <strong>undefined variable in function a(c) { var d = c.split(&#8220;/&#8221;); return d[0];}</strong>? What mean <strong>function b</strong>? We know only <strong>function first_element_of_path</strong>. So this is a broken way for now.</p>
+
+<p>With compressing with archivator we will have only one issue - IE 6 not supporting gzip compressed files.</p>
+
+<p>We don&#8217;t want debug hell. We not support IE6. So we has chosen gzip.</p>
+
+<p>Ok, so we will begin the party!
+I will tell you how we made our static files speedy and didn&#8217;t got debug hell.</p>
+
+<p>First of all we must concatenate all ours JS files into one big JS file and all CSS files into one. We can do this with Jummit Ruby gem. This gem is an industrial strength asset packaging library for Rails, providing both the CSS and JavaScript concatenation and compression. You can find documentation and examples of using of this gem on his home page.</p>
+
+<p>For Rails 3 simply add next line into our Gemfile:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;jammit&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After create config/assets.yml file for Jammit:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">embed_assets</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">off</span>
+</span><span class='line'><span class="l-Scalar-Plain">package_assets</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">on</span>
+</span><span class='line'><span class="l-Scalar-Plain">compress_assets</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">off</span>
+</span><span class='line'><span class="l-Scalar-Plain">allow_debugging</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">on</span>
+</span><span class='line'><span class="l-Scalar-Plain">javascripts</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">application</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/javascripts/jquery-1.4.2.js</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/javascripts/application1.js</span>
+</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/javascripts/application2.js</span>
+</span><span class='line'><span class="l-Scalar-Plain">stylesheets</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">application</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/main.css</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/additional1.css</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/additional2.css</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/additional3.css</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/additional4.css</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/stylesheets/additional5.css</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you see we disabled compressing by Yahoo YUI Compressor and Google Closure Compiler. And we allowed debugging to load the page with uncompressed and unpackaged JS and CSS in production. Gzipping of JS and CSS enabled by default in Jammit. So all steps to start using CDN we did.</p>
+
+<p>Amazon CloudFront can use Amazon S3 and your separate server for getting the static files. Our project has chosen Amazon S3 for storing static files and now we need upload ours JS and CSS compressed files to S3. It&#8217;s very simple. We will use extension to Jammit - jammit-s3 Ruby gem. You can find this extension on GitHub. We open our Gemfile again and replace jammit with jammit-s3. Jammit S3 already has a gem dependency for jammit.
+And we need add S3 settings to our config/ assets.yml file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">s3_access_key_id</span><span class="p-Indicator">:</span> <span class="s">&quot;Put</span><span class="nv"> </span><span class="s">here</span><span class="nv"> </span><span class="s">our</span><span class="nv"> </span><span class="s">S3</span><span class="nv"> </span><span class="s">access</span><span class="nv"> </span><span class="s">key&quot;</span>
+</span><span class='line'><span class="l-Scalar-Plain">s3_secret_access_key</span><span class="p-Indicator">:</span> <span class="s">&quot;Put</span><span class="nv"> </span><span class="s">here</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">S3</span><span class="nv"> </span><span class="s">secret</span><span class="nv"> </span><span class="s">key&quot;</span>
+</span><span class='line'><span class="l-Scalar-Plain">s3_bucket</span><span class="p-Indicator">:</span> <span class="s">&quot;Put</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">S3</span><span class="nv"> </span><span class="s">bucket</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">static</span><span class="nv"> </span><span class="s">files</span><span class="nv"> </span><span class="s">here&quot;</span>
+</span><span class='line'><span class="l-Scalar-Plain">s3_cache_control</span><span class="p-Indicator">:</span> <span class="s">&#39;public,max-age=31536000&#39;</span>
+</span><span class='line'><span class="l-Scalar-Plain">s3_upload_files</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/fonts/**</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/sounds/**</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/swf/**</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">public/javascripts/**/*</span>
+</span><span class='line'><span class="l-Scalar-Plain">use_cloudfront</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">on</span>
+</span><span class='line'><span class="l-Scalar-Plain">cloudfront_dist_id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">XXXXXXXXXXXXXX</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, jammit-s3 will upload your configured asset directly, along with <strong>public/images</strong>. However you can customize this using the <strong>s3_upload_files</strong> setting, which should be a list of file globs. In our case we will upload to S3 all fonts, music, flash and JS. By <strong>use_cloudfront</strong> and <strong>cloudfront_dist_id</strong> settings we enable supporting of CloudFront. Please note that <strong>cloudfront_dist_id</strong> is not the same as the CloudFront domain name. Inside CloudFront management console select the distribution, and you will see Distribution ID value. Additionaly you can set <strong>cloudfront_domain</strong> option and Rails will use the CloudFront domain name for your assets instead of serving them from the (slow) S3 bucket. But we have different domains for assets for each of our partners and we did it in another way.</p>
+
+<p>So you can add new task to your capistrano to make and upload your JS and CSS files:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;Make new jammit assets and upload to S3&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:jammit</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; bundle exec jammit&quot;</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; bundle exec jammit-s3&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">before</span> <span class="s2">&quot;deploy:restart&quot;</span><span class="p">,</span> <span class="s2">&quot;deploy:jammit&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But Jammit gem has a two issues:</p>
+
+<ul>
+<li>not supporting CSS @import directive and￼you need write your import files as a dependences in assets.yml by hand</li>
+<li>paperclip&#8217;s aws-s3 gem dependence for S3 storage. Paperclip can be fixed by extra file from S3 gem.</li>
+</ul>
+
+
+<p>And in this simple Capistrano task we have an issues with CloudFront invalidation requests.</p>
+
+<h2>Known issues with CloudFront invalidation requests:</h2>
+
+<ol>
+<li>It may reportedly take up to 15 minutes to invalidate all the CloudFront caches around the globe (and Amazon charges for more than a certain number of invalidations per month).</li>
+<li>It&#8217;s non-atomic from the perspective of the end-user: They may get an older version of the site with a newer version of the JavaScript and CSS, or vice versa.</li>
+<li>It doesn&#8217;t play nicely with aggressive HTTP caching. For example, once I serve a script or a stylesheet, I would like it to be cached indefinitely with no more round trips to see whether it is valid.</li>
+</ol>
+
+
+<p>Now I will show you how to fix CloudFront invalidation issues. We use subdir with release name in assets to avoid getting old JS and CSS files after deploy. In this way we can support old and new clients in the same time. I will show you piece of our Capistrano tasks:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="k">unless</span> <span class="no">Capistrano</span><span class="o">::</span><span class="no">Configuration</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:instance</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">abort</span> <span class="s2">&quot;This extension requires Capistrano 2&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="no">Capistrano</span><span class="o">::</span><span class="no">Configuration</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">load</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">namespace</span> <span class="ss">:s3</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">desc</span> <span class="s2">&quot;Creates the s3.yml configuration file in shared path.&quot;</span>
+</span><span class='line'>    <span class="n">task</span> <span class="ss">:setup</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">opts</span> <span class="o">=</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:s3_opts</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">send_config_to_server</span><span class="p">(</span><span class="s2">&quot;s3.yml&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">opts</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">desc</span> <span class="o">&lt;&lt;-</span><span class="no">DESC</span>
+</span><span class='line'><span class="sh">      [internal] Updates the symlink for s3.yml file to the just deployed release.</span>
+</span><span class='line'><span class="no">    DESC</span>
+</span><span class='line'>    <span class="n">task</span> <span class="ss">:symlink</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span><span class="err">￼￼￼￼￼</span>
+</span><span class='line'>      <span class="n">setup</span>
+</span><span class='line'>      <span class="n">make_symlink_on_server</span><span class="p">(</span><span class="s2">&quot;s3.yml&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">desc</span> <span class="s2">&quot;set correct bucket name into assets.yml&quot;</span>
+</span><span class='line'>    <span class="n">task</span> <span class="ss">:correct_assets_yml</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">opts</span> <span class="o">=</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:s3_opts</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2">s3_bucket: &#39;</span><span class="si">#{</span><span class="n">opts</span><span class="o">[</span><span class="s2">&quot;bucket&quot;</span><span class="o">]</span><span class="si">}</span><span class="s2">&#39;</span><span class="se">\&quot;</span><span class="s2"> &gt;&gt; </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/assets.yml&quot;</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2">use_cloudfront: true</span><span class="se">\&quot;</span><span class="s2"> &gt;&gt; </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/assets.yml&quot;</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2">cloudfront_dist_id: &#39;</span><span class="si">#{</span><span class="n">opts</span><span class="o">[</span><span class="s2">&quot;cloudfront_dist_id&quot;</span><span class="o">]</span><span class="si">}</span><span class="s2">&#39;</span><span class="se">\&quot;</span><span class="s2"> &gt;&gt; </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/assets.yml&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">desc</span> <span class="s2">&quot;Make new jammit assets path based on commit hash&quot;</span>
+</span><span class='line'>    <span class="n">task</span> <span class="ss">:jammit</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2">package_path: &#39;assets/</span><span class="si">#{</span><span class="n">release_name</span><span class="si">}</span><span class="s2">&#39;</span><span class="se">\&quot;</span><span class="s2"> &gt;&gt; </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/config/assets.yml&quot;</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;mkdir -p </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/public/assets/</span><span class="si">#{</span><span class="n">release_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; bundle exec jammit&quot;</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; bundle exec jammit-s3&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">after</span> <span class="s2">&quot;deploy:setup&quot;</span><span class="p">,</span> <span class="s2">&quot;s3:setup&quot;</span> <span class="k">unless</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:skip_s3_setup</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">after</span> <span class="s2">&quot;deploy:finalize_update&quot;</span><span class="p">,</span> <span class="s2">&quot;s3:symlink&quot;</span><span class="p">,</span> <span class="s2">&quot;s3:correct_assets_yml&quot;</span>
+</span><span class='line'>  <span class="n">before</span> <span class="s2">&quot;deploy:restart&quot;</span><span class="p">,</span> <span class="s2">&quot;s3:jammit&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I has contributed to the Jammit S3. I has fixed issues with broken API version and with sending invalidation requests on each entry in <strong>s3_upload_files</strong> config section. Now Jammit S3 will send invalidation request only after uploading all files to S3.</p>
+
+<p>Issue what I cannot fix is a how FF works with @font-face directives in CSS file. FF by default load fonts only from origin domain. To fix this issue we must
+send <strong>Access-Control-Allow-Origin: your_domain</strong> header to the FF. But Amazon S3 don’t support this header. So we load font from your main domain. May be in the future Amazon will add this header to the S3.</p>
+]]></content>
+  </entry>
+  
+</feed>
