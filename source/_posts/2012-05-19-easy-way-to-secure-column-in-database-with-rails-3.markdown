@@ -22,7 +22,7 @@ As you know ActiveRecord can serialize any column. ActiveRecord uses Marshal to 
 
 I think my example will helps you to decrease time of you development.
 
-``` ruby Example of custom serialization class
+```ruby Example of custom serialization class
 class Example < ActiveRecord::Base    
   class Encryptor
     def initialize(default = '')
