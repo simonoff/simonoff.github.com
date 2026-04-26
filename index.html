@@ -1,0 +1,207 @@
+---
+layout: default
+title: Oleksandr Simonov — Engineer first. CEO second.
+---
+{%- assign p = site.data.person -%}
+
+<div class="page">
+
+  {%- comment -%} Sticky top bar — visible on mobile only (desktop uses left rail) {%- endcomment -%}
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="topbar__name">{{ p.name }}</span>
+      <span class="topbar__location">{{ p.location }}</span>
+    </div>
+    <nav class="topbar__nav" aria-label="Sections">
+      <a href="#profile">Profile</a>
+      <a href="#about">About</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#oss">Open Source</a>
+      <a href="#talks">Talks</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    {%- comment -%} Left rail TOC (desktop) {%- endcomment -%}
+    <aside class="rail" aria-label="Table of contents">
+      <div class="rail__head">
+        <div class="rail__name">{{ p.name }}</div>
+        <div class="rail__role">Engineer · CEO @ Amoniac</div>
+      </div>
+      <div class="rail__label">Contents</div>
+      <ol class="rail__toc">
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#oss">Open Source</a></li>
+        <li><a href="#talks">Talks</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+      <div class="rail__foot">
+        <div class="rail__label">Based in</div>
+        <div class="rail__based">
+          {{ p.based | replace: ' · ', '<br>' }}
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <section id="profile" class="section section--profile">
+        <h2 class="section-label">Profile</h2>
+        <div class="profile">
+          <div class="profile__photo" aria-hidden="true">
+            <img src="{{ '/assets/img/simonov.png' | relative_url }}" alt="" loading="lazy">
+          </div>
+          <div class="profile__body">
+            <h1 class="profile__name">{{ p.name }}</h1>
+            <p class="profile__tagline">"{{ p.tagline }}"</p>
+            <dl class="kv">
+              <div>
+                <dt>role</dt>
+                <dd>{{ p.role }}</dd>
+              </div>
+              <div>
+                <dt>based</dt>
+                <dd>{{ p.based }}</dd>
+              </div>
+              <div>
+                <dt>since</dt>
+                <dd>IT {{ p.since.it }} (Mandrake 7.2) · Ruby {{ p.since.ruby }} · K8s {{ p.since.k8s }}</dd>
+              </div>
+              <div>
+                <dt>focus</dt>
+                <dd>Platform Engineering · IDP · Cloud-Native · IaC</dd>
+              </div>
+              <div>
+                <dt>principle</dt>
+                <dd>{{ p.principle }}</dd>
+              </div>
+              <div>
+                <dt>oss</dt>
+                <dd>github.com/simonoff · {{ site.data.oss.size }}+ projects</dd>
+              </div>
+              <div>
+                <dt>talks</dt>
+                <dd>{{ site.data.talks.size }}+ public talks · slideshare/Amoniac_OU</dd>
+              </div>
+              <div>
+                <dt>contact</dt>
+                <dd><a href="mailto:{{ p.email }}">{{ p.email }}</a></dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <h2 class="section-label">About · 20 years</h2>
+        <p class="prose">{{ p.summary }}</p>
+        <table class="timeline">
+          <tbody>
+            {%- for row in site.data.timeline -%}
+            <tr>
+              <td class="timeline__year">{{ row.year }}</td>
+              <td class="timeline__text">{{ row.text }}</td>
+            </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <ul class="chips" aria-label="Stack">
+          {%- for s in p.stack -%}<li>{{ s }}</li>{%- endfor -%}
+        </ul>
+      </section>
+
+      <section id="expertise" class="section">
+        <h2 class="section-label">Expertise</h2>
+        <table class="rows">
+          <thead>
+            <tr>
+              <th class="col-n">#</th>
+              <th class="col-domain">Domain</th>
+              <th class="col-scope">Scope</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for e in site.data.expertise -%}
+            <tr>
+              <td class="col-n">{{ e.n }}</td>
+              <td class="col-domain">{{ e.title }}</td>
+              <td class="col-scope">{{ e.scope }}</td>
+            </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </section>
+
+      <section id="oss" class="section">
+        <h2 class="section-label">Open Source</h2>
+        <table class="rows">
+          <thead>
+            <tr>
+              <th class="col-repo">Repo</th>
+              <th class="col-lang">Lang</th>
+              <th class="col-desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for o in site.data.oss -%}
+            <tr>
+              <td class="col-repo">
+                {%- if o.url -%}<a href="{{ o.url }}" rel="noopener" target="_blank">{{ o.name }}</a>{%- else -%}{{
+                o.name }}{%- endif -%}
+              </td>
+              <td class="col-lang">{{ o.lang }}</td>
+              <td class="col-desc">{{ o.blurb }}</td>
+            </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <p class="muted mono">full list → <a href="https://github.com/simonoff" rel="noopener"
+            target="_blank">github.com/simonoff</a></p>
+      </section>
+
+      <section id="talks" class="section">
+        <h2 class="section-label">Talks &amp; writing</h2>
+        <p class="muted">{{ site.data.talks.size }}+ public talks · click any card to open on SlideShare</p>
+        <div class="talks">
+          {%- for t in site.data.talks -%}
+          <a class="talk" href="{{ t.url }}" rel="noopener" target="_blank">
+            <div class="talk__thumb">
+              <img src="{{ t.image }}" />
+            </div>
+            <div class="talk__body">
+              <div class="talk__meta">{{ t.topic | upcase }} · {{ t.year }}</div>
+              <div class="talk__title">{{ t.title }}</div>
+              <div class="talk__cta">slideshare ↗</div>
+            </div>
+          </a>
+          {%- endfor -%}
+        </div>
+      </section>
+
+      <section id="contact" class="section section--contact">
+        <h2 class="section-label">Contact</h2>
+        <div class="contact">
+          <div class="contact__cta">
+            <h3>Initiate engagement.</h3>
+            <a class="btn btn--solid btn--lg" href="mailto:{{ p.email }}">Book 30-min intro →</a>
+          </div>
+          <dl class="kv">
+            {%- for l in p.links -%}
+            <div>
+              <dt>{{ l.kind }}</dt>
+              <dd><a href="{{ l.url }}" rel="noopener" {% if l.url contains '://' %} target="_blank" {% endif %}>{{
+                  l.label }}</a></dd>
+            </div>
+            {%- endfor -%}
+          </dl>
+        </div>
+        {%- include footer.html -%}
+      </section>
+
+    </main>
+  </div>
+</div>

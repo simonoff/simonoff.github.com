@@ -1,0 +1,27 @@
+# Open source projects and contributions.
+# stars: integer for GitHub repos, null for distro work / PRs to large repos.
+
+- name: ruby
+  lang: Ruby
+  url: https://github.com/rubyzip/rubyzip
+  blurb: Ruby library for manipulating zip archives. Long-running maintainer.
+
+- name: roo
+  lang: Ruby
+  url: https://github.com/roo-rb/roo
+  blurb: Read Excel, OpenOffice, Google Sheets, CSV from Ruby. Long-running maintainer.
+
+- name: kubespray (PRs)
+  lang: Go
+  url: https://github.com/kubernetes-sigs/kubespray
+  blurb: DigitalOcean external cloud provider · DOKS controller · CNCF / kubernetes-sigs
+
+- name: Gentoo (contributor)
+  lang: Linux
+  url: https://www.gentoo.org/
+  blurb: Authored proper Cyrillic UTF-8 support · upstream contributor
+
+- name: openSUSE (maintainer)
+  lang: Linux
+  url: https://www.opensuse.org/
+  blurb: Erlang packages maintainer

@@ -1,0 +1,15 @@
+- n: "01"
+  title: Platform Engineering
+  scope: Internal Developer Platforms · golden paths · self-service infra
+
+- n: "02"
+  title: Cloud-Native / Kubernetes
+  scope: Production K8s · operators · multi-cluster · CNCF contributor
+
+- n: "03"
+  title: Infrastructure as Code
+  scope: Terraform · GitOps · automation at every level
+
+- n: "04"
+  title: Backend & Distributed Systems
+  scope: Ruby · Go · 20 years shipping production code

@@ -1,0 +1,36 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: $bg;
+  color: $fg;
+  font-family: $font-sans;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 600; color: $fg-strong; line-height: 1.2; }
+
+p { margin: 0 0 1em; }
+
+a {
+  color: $accent;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+button { font: inherit; cursor: pointer; }
+
+img { max-width: 100%; display: block; }
+
+table { border-collapse: collapse; width: 100%; }
+
+dl, dd { margin: 0; }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+.mono { font-family: $font-mono; }
+.muted { color: $mid; }

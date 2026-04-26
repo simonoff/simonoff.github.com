@@ -1,0 +1,442 @@
+// Components: profile, key-value list, timeline, chips, rows table, talks, contact, buttons, cookie banner, footer.
+
+// ─── Placeholder boxes ───────────────────────────────
+%ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(45deg, transparent 0 6px, rgba(255, 255, 255, .025) 6px 12px), $bg-alt;
+  border: 1px dashed $line;
+  color: $mid;
+  font-family: $font-mono;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ─── Profile ─────────────────────────────────────────
+.profile {
+  &__photo {
+    width: 120px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 18px;
+    overflow: hidden;
+    @extend %ph;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--placeholder {
+      /* reserved class set by onerror */
+    }
+  }
+
+  &__name {
+    font-size: clamp(28px, 5vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 10px;
+    color: $fg-strong;
+  }
+
+  &__tagline {
+    font-size: clamp(15px, 2.4vw, 18px);
+    color: $accent;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .profile {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 32px;
+    align-items: flex-start;
+
+    &__photo {
+      width: 160px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ─── Key-value list (table-like) ─────────────────────
+.kv {
+  font-family: $font-mono;
+  font-size: 11px;
+  width: 100%;
+
+  >div {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding: 7px 0;
+    border-bottom: 1px dotted $line;
+  }
+
+  dt {
+    color: $mid;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+  }
+
+  dd {
+    color: $fg;
+    word-break: break-word;
+
+    a {
+      color: inherit;
+      border-bottom: 1px solid transparent;
+
+      &:hover {
+        color: $accent;
+        text-decoration: none;
+        border-color: currentColor;
+      }
+    }
+  }
+}
+
+@media (min-width: $bp-md) {
+  .kv {
+    font-size: 12px;
+
+    >div {
+      grid-template-columns: 100px 1fr;
+      padding: 8px 0;
+    }
+
+    dt {
+      font-size: 10px;
+    }
+  }
+}
+
+// ─── Timeline ────────────────────────────────────────
+.prose {
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: $content-max;
+  margin-bottom: 24px;
+  color: $fg;
+}
+
+.timeline {
+  font-family: $font-mono;
+  font-size: 11.5px;
+  max-width: $content-max;
+
+  &__year {
+    padding: 7px 16px 7px 0;
+    color: $accent;
+    width: 80px;
+    vertical-align: top;
+  }
+
+  &__text {
+    padding: 7px 0;
+    color: $fg;
+  }
+
+  tr {
+    border-bottom: 1px dotted $line;
+  }
+}
+
+// ─── Chips (stack tags) ──────────────────────────────
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 18px;
+
+  li {
+    font-family: $font-mono;
+    font-size: 10px;
+    padding: 4px 8px;
+    border: 1px solid $line;
+    color: $fg;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .chips li {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}
+
+// ─── Rows table (expertise, oss) ─────────────────────
+.rows {
+  font-size: 13px;
+
+  thead tr {
+    border-top: 1.5px solid $fg;
+    border-bottom: 1px solid $fg;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 12px 10px 0;
+    font-family: $font-mono;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $accent;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $line;
+  }
+
+  td {
+    padding: 14px 12px 14px 0;
+    vertical-align: top;
+  }
+
+  td:last-child {
+    padding-right: 0;
+  }
+
+  .col-n {
+    color: $accent;
+    font-family: $font-mono;
+    width: 40px;
+  }
+
+  .col-domain {
+    font-weight: 600;
+    color: $fg-strong;
+  }
+
+  .col-scope {
+    color: $mid;
+  }
+
+  .col-repo {
+    font-family: $font-mono;
+    color: $fg-strong;
+    font-weight: 600;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: $accent;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .col-lang {
+    font-family: $font-mono;
+    color: $mid;
+    font-size: 11px;
+    width: 100px;
+  }
+
+  .col-desc {
+    color: $mid;
+  }
+}
+
+// On narrow screens, transform rows table into stacked cards.
+@media (max-width: 1023px) {
+  .rows {
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid $line;
+    }
+
+    tr:first-child {
+      border-top: 1.5px solid $fg;
+    }
+
+    td {
+      display: block;
+      padding: 0;
+    }
+
+    .col-n,
+    .col-domain {
+      display: inline;
+    }
+
+    .col-n {
+      color: $accent;
+      font-family: $font-mono;
+      font-size: 11px;
+      margin-right: 8px;
+    }
+
+    .col-domain {
+      font-size: 13.5px;
+    }
+
+    .col-scope {
+      display: block;
+      color: $mid;
+      font-size: 12.5px;
+      margin-top: 6px;
+    }
+
+    .col-repo {
+      display: block;
+      font-size: 12.5px;
+    }
+
+    .col-lang {
+      display: inline-block;
+      font-size: 10.5px;
+      margin-right: 8px;
+      color: $accent;
+    }
+
+    .col-desc {
+      display: block;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+}
+
+// ─── Talks grid ──────────────────────────────────────
+.talks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.talk {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid $line;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    background: rgba(255, 255, 255, .02);
+
+    .talk__cta {
+      color: $accent;
+    }
+  }
+
+  &__thumb {
+    @extend %ph;
+    width: 100px;
+    height: 64px;
+    flex-shrink: 0;
+    font-size: 9px;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__meta {
+    font-family: $font-mono;
+    font-size: 9.5px;
+    color: $accent;
+    margin-bottom: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  &__title {
+    font-size: 13px;
+    color: $fg-strong;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  &__cta {
+    font-family: $font-mono;
+    font-size: 9.5px;
+    color: $mid;
+    transition: color .15s;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .talks {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+
+  .talk {
+    padding: 14px 0;
+  }
+
+  .talk__thumb {
+    width: 120px;
+    height: 78px;
+    font-size: 10px;
+  }
+
+  .talk__title {
+    font-size: 14px;
+  }
+
+  .talk__meta {
+    font-size: 10.5px;
+  }
+}
+
+// ─── Contact ─────────────────────────────────────────
+.contact {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 32px;
+
+  &__cta h3 {
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .contact {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: flex-start;
+  }
+}
+
+// ─── Footer ──────────────────────────────────────────
+.site-footer {
+  border-top: 1px solid $line;
+  margin-top: 32px;
+  padding-top: 18px;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: $font-mono;
+    font-size: 9.5px;
+    color: $mid;
+  }
+
+  &__meta {
+    color: #969696;
+  }
+}

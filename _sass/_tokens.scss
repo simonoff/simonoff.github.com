@@ -1,0 +1,26 @@
+// Design tokens. Single source of truth for colours, spacing, type.
+
+// ─── Colour ──────────────────────────────────────────
+$bg:        #0d0d0d;
+$bg-alt:    #000;
+$fg:        #d8d8d5;
+$fg-strong: #f2f2f0;
+$mid:       #888;
+$line:      #2a2a2a;
+$accent:    #76c4ee;
+
+// ─── Typography ──────────────────────────────────────
+$font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+// ─── Spacing ─────────────────────────────────────────
+$gap-xs: 6px;
+$gap-sm: 12px;
+$gap-md: 24px;
+$gap-lg: 48px;
+$gap-xl: 64px;
+
+// ─── Layout ──────────────────────────────────────────
+$rail-w: 240px;
+$content-max: 720px;
+$bp-md: 1024px;

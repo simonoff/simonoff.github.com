@@ -1,0 +1,58 @@
+# All public copy lives here. Edit and push — site rebuilds.
+
+name: Oleksandr Simonov
+role: Engineer · Founder & CEO @ Amoniac OÜ
+tagline: Engineer first. CEO second.
+based: Tallinn, Estonia · remote-friendly
+location: Tallinn, EE
+languages: en · uk · ru
+
+summary: >-
+  20+ years writing code in production. 15+ years shipping Ruby. Today I run
+  Amoniac OÜ and still commit — to platforms, to open source, to clients'
+  codebases.
+
+principle: KISS — find solutions that are simple, easy to maintain, and scale.
+
+# focus areas (chips under the bio)
+stack:
+  - Ruby
+  - Go
+  - TypeScript
+  - Vue
+  - React
+  - Kubernetes
+  - Terraform
+  - PostgreSQL
+
+# milestones rendered next to "since:"
+since:
+  it: 2000        # first Linux (Mandrake 7.2)
+  paid: 2002      # first paid commit
+  ruby: 2010
+  k8s: 2017
+  amoniac: 2014
+
+# contact channels (rendered in §Contact, below the CTA)
+links:
+  - { kind: email,    label: alex@amoniac.eu,            url: "mailto:alex@amoniac.eu" }
+  - { kind: linkedin, label: in/simonoff,                url: "https://www.linkedin.com/in/simonoff" }
+  - { kind: github,   label: github.com/simonoff,        url: "https://github.com/simonoff" }
+  - { kind: company,  label: amoniac.eu,                 url: "https://amoniac.eu" }
+
+# Schema.org Person — sameAs
+sameAs:
+  - https://github.com/simonoff
+  - https://www.linkedin.com/in/simonoff
+  - https://www.slideshare.net/Amoniac_OU
+
+# Schema.org Person — knowsAbout
+knowsAbout:
+  - Kubernetes
+  - Platform Engineering
+  - Cloud-Native
+  - Infrastructure as Code
+  - Ruby
+  - Go
+  - DevOps
+  - Site Reliability Engineering

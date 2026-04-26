@@ -1,0 +1,25 @@
+{%- assign p = site.data.person -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ p.name | jsonify }},
+  "jobTitle": {{ p.role | jsonify }},
+  "description": {{ site.description | strip_newlines | jsonify }},
+  "url": {{ site.url | jsonify }},
+  "image": {{ site.url | append: '/assets/img/og.png' | jsonify }},
+  "email": {{ p.links | where: 'kind', 'email' | first | map: 'label' | jsonify }},
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Amoniac OÜ",
+    "url": "https://amoniac.eu"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tallinn",
+    "addressCountry": "EE"
+  },
+  "knowsAbout": {{ p.knowsAbout | jsonify }},
+  "sameAs": {{ p.sameAs | jsonify }}
+}
+</script>

@@ -1,0 +1,210 @@
+// Mobile-first layout. Desktop overrides in _responsive.scss.
+
+.page {
+  min-height: 100vh;
+}
+
+// ─── Sticky top bar (mobile) ─────────────────────────
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: $bg-alt;
+  border-bottom: 1px solid $line;
+
+  &__brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+  }
+
+  &__name {
+    font-family: $font-mono;
+    font-size: 11px;
+    font-weight: 600;
+    color: $fg-strong;
+  }
+
+  &__location {
+    font-family: $font-mono;
+    font-size: 9px;
+    color: $mid;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 18px;
+    padding: 8px 16px 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    a {
+      flex: 0 0 auto;
+      font-family: $font-mono;
+      font-size: 11px;
+      color: $mid;
+      padding-bottom: 2px;
+
+      &:hover,
+      &:focus {
+        color: $accent;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// ─── Layout shell ────────────────────────────────────
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+}
+
+.rail {
+  display: none;
+}
+
+// hidden on mobile
+
+.main {
+  padding: 24px 16px 48px;
+  max-width: 100%;
+}
+
+.section {
+  margin-bottom: $gap-lg;
+  scroll-margin-top: 74px;
+
+  &--contact {
+    margin-bottom: 0;
+    padding-top: 24px;
+    border-top: 2px solid $fg;
+  }
+}
+
+.section-label {
+  font-family: $font-mono;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $accent;
+  border-top: 1.5px solid $fg;
+  border-bottom: 1px solid $line;
+  padding: 10px 0;
+  margin-bottom: 24px;
+}
+
+// ─── Desktop ─────────────────────────────────────────
+@media (min-width: $bp-md) {
+  .topbar {
+    display: none;
+  }
+
+  .layout {
+    flex-direction: row;
+    min-height: 100vh;
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    width: $rail-w;
+    flex-shrink: 0;
+    padding: 32px 24px;
+    border-right: 1px solid $line;
+    background: $bg-alt;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+
+    &__head {
+      margin-bottom: 32px;
+    }
+
+    &__name {
+      font-family: $font-mono;
+      font-size: 12px;
+      font-weight: 600;
+      color: $fg-strong;
+      margin-bottom: 6px;
+    }
+
+    &__role {
+      font-family: $font-mono;
+      font-size: 10px;
+      color: $mid;
+    }
+
+    &__label {
+      font-family: $font-mono;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: $mid;
+      margin-bottom: 12px;
+    }
+
+    &__toc {
+      font-family: $font-mono;
+      font-size: 11.5px;
+      line-height: 2;
+
+      li {
+        border-bottom: 1px dotted $line;
+        padding: 4px 0;
+      }
+
+      li:first-child a {
+        color: $accent;
+        font-weight: 600;
+      }
+
+      a {
+        color: $mid;
+        display: block;
+
+        &:hover {
+          color: $accent;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &__foot {
+      margin-top: 32px;
+    }
+
+    &__based {
+      font-family: $font-mono;
+      font-size: 10px;
+      color: $mid;
+      line-height: 1.7;
+    }
+  }
+
+  .main {
+    flex: 1;
+    padding: 48px 64px;
+    max-width: 960px;
+  }
+
+  .section {
+    margin-bottom: 0;
+    scroll-margin-top: 0;
+  }
+
+  .section-label {
+    font-size: 11px;
+  }
+}
