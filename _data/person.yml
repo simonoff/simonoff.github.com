@@ -1,7 +1,7 @@
 # All public copy lives here. Edit and push — site rebuilds.
 
 name: Oleksandr Simonov
-role: Engineer · Founder & CEO @ Amoniac OÜ
+role: Founder & CEO @ Amoniac OÜ
 tagline: Engineer first. CEO second.
 based: Tallinn, Estonia · remote-friendly
 location: Tallinn, EE
@@ -9,7 +9,7 @@ languages: en · uk · ru
 
 summary: >-
   20+ years writing code in production. 15+ years shipping Ruby. Today I run
-  Amoniac OÜ and still commit — to platforms, to open source, to clients'
+  Amoniac OÜ and still commit — to platforms, to open source, to client's
   codebases.
 
 principle: KISS — find solutions that are simple, easy to maintain, and scale.
@@ -18,33 +18,59 @@ principle: KISS — find solutions that are simple, easy to maintain, and scale.
 stack:
   - Ruby
   - Go
-  - TypeScript
   - Vue
-  - React
   - Kubernetes
   - Terraform
   - PostgreSQL
 
 # milestones rendered next to "since:"
 since:
-  it: 2000        # first Linux (Mandrake 7.2)
-  paid: 2002      # first paid commit
+  it: 2000 # first Linux (Mandrake 7.2)
+  paid: 2002 # first paid commit
   ruby: 2010
-  k8s: 2017
+  go: 2017
+  k8s: 2019
   amoniac: 2014
+
+focus:
+  - Platform Engineering
+  - Cloud-Native
+  - Kubernetes
+  - IaC
+
+organization:
+  name: Amoniac OÜ
+  url: https://amoniac.eu
+  logo: https://amoniac.eu/amoniac_logo_ten.png
+  foundingDate: "2014"
+  description: "Amoniac is a technology partner specializing in Platform
+    Engineering, DevOps automation, and scalable cloud-native infrastructure for
+    engineering teams."
 
 # contact channels (rendered in §Contact, below the CTA)
 links:
-  - { kind: email,    label: alex@amoniac.eu,            url: "mailto:alex@amoniac.eu" }
-  - { kind: linkedin, label: in/simonoff,                url: "https://www.linkedin.com/in/simonoff" }
-  - { kind: github,   label: github.com/simonoff,        url: "https://github.com/simonoff" }
-  - { kind: company,  label: amoniac.eu,                 url: "https://amoniac.eu" }
+  - {
+      kind: email,
+      label: oleksandr@amoniac.eu,
+      url: "mailto:oleksandr@amoniac.eu",
+    }
+  - {
+      kind: linkedin,
+      label: in/simonoff,
+      url: "https://www.linkedin.com/in/simonoff",
+    }
+  - {
+      kind: github,
+      label: github.com/simonoff,
+      url: "https://github.com/simonoff",
+    }
+  - { kind: company, label: amoniac.eu, url: "https://amoniac.eu" }
 
 # Schema.org Person — sameAs
 sameAs:
   - https://github.com/simonoff
   - https://www.linkedin.com/in/simonoff
-  - https://www.slideshare.net/Amoniac_OU
+  - https://dev.to/simonoff
 
 # Schema.org Person — knowsAbout
 knowsAbout:
@@ -56,3 +82,13 @@ knowsAbout:
   - Go
   - DevOps
   - Site Reliability Engineering
+  - Helm
+  - ArgoCD
+
+alternateName:
+  - Alex Simonov
+  - Aleksandr Simonov
+  - Alexandr Simonov
+  - Олександр Сімонов
+  - Александр Симонов
+  - Алекс Симонов

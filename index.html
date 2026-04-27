@@ -6,7 +6,6 @@ title: Oleksandr Simonov — Engineer first. CEO second.
 
 <div class="page">
 
-  {%- comment -%} Sticky top bar — visible on mobile only (desktop uses left rail) {%- endcomment -%}
   <header class="topbar">
     <div class="topbar__brand">
       <span class="topbar__name">{{ p.name }}</span>
@@ -23,13 +22,7 @@ title: Oleksandr Simonov — Engineer first. CEO second.
   </header>
 
   <div class="layout">
-
-    {%- comment -%} Left rail TOC (desktop) {%- endcomment -%}
     <aside class="rail" aria-label="Table of contents">
-      <div class="rail__head">
-        <div class="rail__name">{{ p.name }}</div>
-        <div class="rail__role">Engineer · CEO @ Amoniac</div>
-      </div>
       <div class="rail__label">Contents</div>
       <ol class="rail__toc">
         <li><a href="#profile">Profile</a></li>
@@ -39,12 +32,6 @@ title: Oleksandr Simonov — Engineer first. CEO second.
         <li><a href="#talks">Talks</a></li>
         <li><a href="#contact">Contact</a></li>
       </ol>
-      <div class="rail__foot">
-        <div class="rail__label">Based in</div>
-        <div class="rail__based">
-          {{ p.based | replace: ' · ', '<br>' }}
-        </div>
-      </div>
     </aside>
 
     <main class="main">
@@ -69,27 +56,21 @@ title: Oleksandr Simonov — Engineer first. CEO second.
               </div>
               <div>
                 <dt>since</dt>
-                <dd>IT {{ p.since.it }} (Mandrake 7.2) · Ruby {{ p.since.ruby }} · K8s {{ p.since.k8s }}</dd>
+                <dd>IT {{ p.since.it }} · Ruby {{ p.since.ruby }} · Go {{ p.since.go }} · K8s {{ p.since.k8s }}</dd>
               </div>
               <div>
                 <dt>focus</dt>
-                <dd>Platform Engineering · IDP · Cloud-Native · IaC</dd>
+                <dd>{{ p.focus | join: " · " }}</dd>
               </div>
               <div>
                 <dt>principle</dt>
                 <dd>{{ p.principle }}</dd>
               </div>
               <div>
-                <dt>oss</dt>
-                <dd>github.com/simonoff · {{ site.data.oss.size }}+ projects</dd>
-              </div>
-              <div>
-                <dt>talks</dt>
-                <dd>{{ site.data.talks.size }}+ public talks · slideshare/Amoniac_OU</dd>
-              </div>
-              <div>
                 <dt>contact</dt>
-                <dd><a href="mailto:{{ p.email }}">{{ p.email }}</a></dd>
+                <dd><a href="mailto:{{ p.links | where: 'kind', 'email' | first | map: 'label' }}">{{ p.links | where:
+                    'kind', 'email' | first | map: 'label' }}</a>
+                </dd>
               </div>
             </dl>
           </div>
@@ -97,7 +78,7 @@ title: Oleksandr Simonov — Engineer first. CEO second.
       </section>
 
       <section id="about" class="section">
-        <h2 class="section-label">About · 20 years</h2>
+        <h2 class="section-label">About · 20+ years in IT</h2>
         <p class="prose">{{ p.summary }}</p>
         <table class="timeline">
           <tbody>
@@ -173,7 +154,7 @@ title: Oleksandr Simonov — Engineer first. CEO second.
               <img src="{{ t.image }}" />
             </div>
             <div class="talk__body">
-              <div class="talk__meta">{{ t.topic | upcase }} · {{ t.year }}</div>
+              <div class="talk__meta">{{ t.topic | upcase }}</div>
               <div class="talk__title">{{ t.title }}</div>
               <div class="talk__cta">slideshare ↗</div>
             </div>
@@ -187,7 +168,8 @@ title: Oleksandr Simonov — Engineer first. CEO second.
         <div class="contact">
           <div class="contact__cta">
             <h3>Initiate engagement.</h3>
-            <a class="btn btn--solid btn--lg" href="mailto:{{ p.email }}">Book 30-min intro →</a>
+            <a class="btn btn--solid btn--lg"
+              href="mailto:{{ p.links | where: 'kind', 'email' | first | map: 'label' }}">Book 30-min intro →</a>
           </div>
           <dl class="kv">
             {%- for l in p.links -%}

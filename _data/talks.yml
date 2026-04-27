@@ -1,49 +1,41 @@
 # Talks. Edit / append freely. All linked to SlideShare.
 
 - title: Deployment Tales
-  year: 2017
   topic: DevOps
   url: https://www.slideshare.net/slideshow/deployment-tales-80398381/80398381
   image: https://cdn.slidesharecdn.com/ss_thumbnails/deployment-tales-171003101325-thumbnail.jpg
 
 - title: How to Become a Chef
-  year: 2017
   topic: DevOps
   url: https://www.slideshare.net/slideshow/how-to-become-a-hef/80401649
   image: https://cdn.slidesharecdn.com/ss_thumbnails/howtobecomeachef-171003114508-thumbnail.jpg
 
 - title: Rupher
-  year: 2017
   topic: Ruby
   url: https://www.slideshare.net/slideshow/rupher/80603401
   image: https://cdn.slidesharecdn.com/ss_thumbnails/rupher-171009105652-thumbnail.jpg
 
 - title: "RubyMotion: Overview and Ecosystem"
-  year: 2017
   topic: Ruby/Mobile
   url: https://www.slideshare.net/slideshow/rubymotion-overview-and-ecosystem-80903723/80903723
   image: https://cdn.slidesharecdn.com/ss_thumbnails/rubymotion-171017153657-thumbnail.jpg
 
 - title: Cleaners of Caribbean
-  year: 2018
   topic: Engineering culture
   url: https://www.slideshare.net/slideshow/cleaners-of-caribbean-125807994/125807994
   image: https://cdn.slidesharecdn.com/ss_thumbnails/rm25-181213145341-thumbnail.jpg
 
 - title: Go in Heterogeneous Language Environments
-  year: 2019
   topic: Go
   url: https://www.slideshare.net/slideshow/go-in-heterogeneous-language-environments/153143188
   image: https://cdn.slidesharecdn.com/ss_thumbnails/go-meetup-190702143629-thumbnail.jpg
 
 - title: Dokku — your own Heroku 2.1
-  year: 2019
   topic: DevOps
   url: https://www.slideshare.net/slideshow/dokku-your-own-heroku-21-189277368/189277368
   image: https://cdn.slidesharecdn.com/ss_thumbnails/dokku-yourownheroku21-191101133348-thumbnail.jpg
 
 - title: Capystrano and SystemD
-  year: 2017
   topic: DevOps
   url: https://www.slideshare.net/slideshow/capistrano-and-systemd/81151796
   image: https://cdn.slidesharecdn.com/ss_thumbnails/capistrano-171024143437-thumbnail.jpg

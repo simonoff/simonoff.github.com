@@ -9,12 +9,29 @@
 - name: roo
   lang: Ruby
   url: https://github.com/roo-rb/roo
-  blurb: Read Excel, OpenOffice, Google Sheets, CSV from Ruby. Long-running maintainer.
+  blurb: Read Excel, OpenOffice, Google Sheets, CSV from Ruby. Long-running
+    maintainer.
+
+- name: pipedrive.rb
+  lang: Ruby
+  url: https://github.com/amoniacou/pipedrive.rb
+  blurb: Pipedrive.com API wrapper
+
+- name: External DNS DigitalOcean Webhook
+  lang: Go
+  url: https://github.com/amoniacou/external-dns-digitalocean-webhook
+  blurb: A webhook provider for ExternalDNS that manages DNS records in DigitalOcean.
+
+- name: Supabase Kubernets CNPG Helm chart
+  lang: Helm
+  url: https://github.com/amoniacou/supabase-kubernetes-cnpg
+  blurb: Opinionated fork of supabase-community/supabase-kubernetes that replaces
+    the single-pod Postgres StatefulSet with a CloudNativePG (CNPG) Cluster.
 
 - name: kubespray (PRs)
-  lang: Go
+  lang: Helm
   url: https://github.com/kubernetes-sigs/kubespray
-  blurb: DigitalOcean external cloud provider · DOKS controller · CNCF / kubernetes-sigs
+  blurb: Cillium custom installation into kubespray
 
 - name: Gentoo (contributor)
   lang: Linux

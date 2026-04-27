@@ -4,6 +4,7 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": {{ p.name | jsonify }},
+  "alternateName": {{ p.alternateName | jsonify }},
   "jobTitle": {{ p.role | jsonify }},
   "description": {{ site.description | strip_newlines | jsonify }},
   "url": {{ site.url | jsonify }},
@@ -11,8 +12,14 @@
   "email": {{ p.links | where: 'kind', 'email' | first | map: 'label' | jsonify }},
   "worksFor": {
     "@type": "Organization",
-    "name": "Amoniac OÜ",
-    "url": "https://amoniac.eu"
+    "name": {{ p.organization.name | jsonify }},
+    "url": {{ p.organization.url | jsonify }},
+    "foundingDate": {{ p.organization.foundingDate | jsonify }},
+    "description": {{ p.organization.description | strip_newlines | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ p.organization.logo | jsonify }}
+    }
   },
   "address": {
     "@type": "PostalAddress",

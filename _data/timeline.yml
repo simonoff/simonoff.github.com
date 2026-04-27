@@ -1,28 +1,34 @@
 # "About · 20 years" timeline. Years can be a number or a string ("~2005", "now").
 
 - year: 2000
-  text: first Linux · Mandrake 7.2 · the start
+  text: first Linux · the start
 
 - year: 2002
   text: first paid PHP commit · freelance
 
-- year: "~2005"
+- year: 2004
   text: Gentoo contributor · Cyrillic UTF-8 support
 
-- year: 2010
-  text: switched to Ruby · joined Railsware
+- year: 2008
+  text: switched to Ruby
 
-- year: "~2012"
+- year: 2009
   text: openSUSE · Erlang package maintainer
 
 - year: 2014
   text: founded Amoniac OÜ · Tallinn
 
 - year: 2017
-  text: Kubernetes in production · CNCF
+  text: Docker in production
 
-- year: 2024
-  text: kubespray contributor · kubernetes-sigs
+- year: 2020
+  text: Kubernetes in production
+
+- year: 2021
+  text: CKA certification
+
+- year: 2026
+  text: Amoniac joined Linux foundation
 
 - year: now
-  text: 15+ talks · 7+ OSS · still shipping
+  text: CNCF · OSS · still shipping

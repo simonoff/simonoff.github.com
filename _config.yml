@@ -1,4 +1,3 @@
-# ─── Site ────────────────────────────────────────────
 title: Oleksandr Simonov
 tagline: Engineer first. CEO second.
 description: >-
@@ -21,29 +20,22 @@ plugins:
   - jekyll-sass-converter
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-feed
 
 # ─── SEO / OG ────────────────────────────────────────
-twitter:
-  username: ""        # add when you have one
-  card: summary_large_image
 social:
   name: Oleksandr Simonov
   links:
     - https://github.com/simonoff
     - https://www.linkedin.com/in/simonoff
-    - https://www.slideshare.net/Amoniac_OU
-logo: /assets/img/og.png
+logo: /assets/img/simonov.png
 defaults:
   - scope: { path: "", type: "pages" }
     values:
-      image: /assets/img/og.png
+      image: /assets/img/simonov.png
       layout: default
 
-# ─── Analytics ───────────────────────────────────────
-# GA4 measurement ID. Loaded only after the visitor accepts cookies.
 analytics:
-  ga4: G-XXXXXXXXXX   # ← replace with your real ID
+  ga4: G-XXXXXXXXXX # ← replace with your real ID
 
 include:
   - assets

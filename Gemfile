@@ -7,7 +7,7 @@ source "https://rubygems.org"
 gem "jekyll"
 gem "jekyll-sass-converter"
 
-gem "jekyll-seo-tag"
+gem "jekyll-seo-tag", github: 'simonoff/jekyll-seo-tag'
 gem "jekyll-sitemap"
 gem "jekyll-feed"
 
