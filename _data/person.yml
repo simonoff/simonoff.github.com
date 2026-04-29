@@ -69,8 +69,9 @@ links:
 # Schema.org Person — sameAs
 sameAs:
   - https://github.com/simonoff
-  - https://www.linkedin.com/in/simonoff
+  - https://linkedin.com/in/simonoff
   - https://dev.to/simonoff
+  - https://dou.ua/users/alex-simonov/
 
 # Schema.org Person — knowsAbout
 knowsAbout:
